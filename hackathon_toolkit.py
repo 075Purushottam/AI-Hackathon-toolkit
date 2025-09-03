@@ -16,6 +16,7 @@ from transformers import pipeline
 
 # LangChain + OpenAI
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 
@@ -50,7 +51,8 @@ def summarization(text, model="facebook/bart-large-cnn", max_length=50, min_leng
 # 🔹 RAG (Retrieval-Augmented Generation)
 # =============================
 def rag_pipeline(docs, query, embedding_model="text-embedding-3-small", llm_model="gpt-4o-mini"):
-    embeddings = OpenAIEmbeddings(model=embedding_model)
+    # embeddings = OpenAIEmbeddings(model=embedding_model)
+    # embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
     db = FAISS.from_texts(docs, embeddings)
     retriever = db.as_retriever()
     llm = ChatOpenAI(model=llm_model)
